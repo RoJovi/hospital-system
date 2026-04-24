@@ -1,0 +1,109 @@
+#ifndef UTILS_H
+#define UTILS_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+#include <conio.h>
+#include <locale.h>
+#include <time.h>
+
+// 颜色定义
+#define RED FOREGROUND_RED | FOREGROUND_INTENSITY
+#define GREEN FOREGROUND_GREEN | FOREGROUND_INTENSITY
+#define BLUE FOREGROUND_BLUE | FOREGROUND_INTENSITY
+#define YELLOW FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY
+#define WHITE FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY
+#define CYAN FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY
+#define MAGENTA FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY
+
+// 常量定义
+#define MAX_NAME 50
+#define MAX_ID 20
+#define MAX_PHONE 15
+#define MAX_DEPARTMENT 30
+#define MAX_MEDICINE 40
+#define MAX_DIAGNOSIS 100
+#define MAX_TREATMENT 100
+#define ADMIN_PASSWORD "admin123"
+#define USER_PASSWORD "user123"
+
+// 日期结构体
+typedef struct {
+    int year;
+    int month;
+    int day;
+} Date;
+
+typedef struct Patient {
+    char id[MAX_ID];
+    char name[MAX_NAME];
+    int age;
+    char gender[10];
+    char phone[MAX_PHONE];
+    char diagnosis[MAX_DIAGNOSIS];
+    char treatment[MAX_TREATMENT];
+    Date admission_date;
+    double total_cost;
+    struct Patient *next;
+} Patient;
+
+typedef struct Doctor {
+    char id[MAX_ID];
+    char name[MAX_NAME];
+    int age;
+    char gender[10];
+    char department[MAX_DEPARTMENT];
+    char specialty[50];
+    char phone[MAX_PHONE];
+    char schedule[100];
+    struct Doctor *next;
+} Doctor;
+
+typedef struct Medicine {
+    char id[MAX_ID];
+    char name[MAX_MEDICINE];
+    char specification[50];
+    char manufacturer[50];
+    double price;
+    int stock;
+    Date production_date;
+    Date expiry_date;
+    struct Medicine *next;
+} Medicine;
+
+typedef struct Registration {
+    char reg_id[MAX_ID];
+    char patient_id[MAX_ID];
+    char doctor_id[MAX_ID];
+    Date reg_date;
+    char department[MAX_DEPARTMENT];
+    double reg_fee;
+    int status;
+    struct Registration *next;
+} Registration;
+
+typedef struct Cost {
+    char cost_id[MAX_ID];
+    char patient_id[MAX_ID];
+    Date cost_date;
+    char item[50];
+    double amount;
+    int payment_status;
+    struct Cost *next;
+} Cost;
+
+typedef struct Hospitalization {
+    char hosp_id[MAX_ID]; 
+    char patient_id[MAX_ID];
+    char doctor_id[MAX_ID];
+    Date admission_date;
+    char bed_number[20];
+    char diagnosis[MAX_DIAGNOSIS];
+    double total_cost;
+    int status;
+    struct Hospitalization *next;
+} Hospitalization;
+
+#endif // UTILS_H

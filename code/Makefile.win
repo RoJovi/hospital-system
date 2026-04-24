@@ -1,0 +1,52 @@
+# Project: 医院管理系统
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main1.o cost.o data.o doctor.o hospitalization.o medicine.o patient.o registration.o ui.o
+LINKOBJ  = main1.o cost.o data.o doctor.o hospitalization.o medicine.o patient.o registration.o ui.o
+LIBS     = -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = 医院管理系统.exe
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main1.o: main1.c
+	$(CC) -c main1.c -o main1.o $(CFLAGS)
+
+cost.o: cost.c
+	$(CC) -c cost.c -o cost.o $(CFLAGS)
+
+data.o: data.c
+	$(CC) -c data.c -o data.o $(CFLAGS)
+
+doctor.o: doctor.c
+	$(CC) -c doctor.c -o doctor.o $(CFLAGS)
+
+hospitalization.o: hospitalization.c
+	$(CC) -c hospitalization.c -o hospitalization.o $(CFLAGS)
+
+medicine.o: medicine.c
+	$(CC) -c medicine.c -o medicine.o $(CFLAGS)
+
+patient.o: patient.c
+	$(CC) -c patient.c -o patient.o $(CFLAGS)
+
+registration.o: registration.c
+	$(CC) -c registration.c -o registration.o $(CFLAGS)
+
+ui.o: ui.c
+	$(CC) -c ui.c -o ui.o $(CFLAGS)
