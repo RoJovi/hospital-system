@@ -14,5 +14,6 @@ void delMedicine();
 void modMedicine();
 void sortMedicinesByStock();
 void swapMedicineData(Medicine *a, Medicine *b);
+Medicine* findMedicineByName(const char *name);
 
 #endif // MEDICINE_H

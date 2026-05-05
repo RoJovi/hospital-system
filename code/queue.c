@@ -1,6 +1,7 @@
 #include "queue.h"
 #include <stdlib.h>
 #include <string.h>
+#include "ui.h"
 
 // 初始化优先队列
 void initQueue(PriorityQueue *q) {

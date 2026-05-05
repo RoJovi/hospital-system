@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main1.o cost.o data.o doctor.o hospitalization.o medicine.o patient.o registration.o ui.o hashmap.o queue.o
-LINKOBJ  = main1.o cost.o data.o doctor.o hospitalization.o medicine.o patient.o registration.o ui.o hashmap.o queue.o
+OBJ      = main1.o cost.o data.o doctor.o hospitalization.o medicine.o patient.o registration.o ui.o hashmap.o queue.o recommend.o
+LINKOBJ  = main1.o cost.o data.o doctor.o hospitalization.o medicine.o patient.o registration.o ui.o hashmap.o queue.o recommend.o
 LIBS     = -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -56,3 +56,6 @@ hashmap.o: hashmap.c
 
 queue.o: queue.c
 	$(CC) -c queue.c -o queue.o $(CFLAGS)
+
+recommend.o: recommend.c
+	$(CC) -c recommend.c -o recommend.o $(CFLAGS)

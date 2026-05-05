@@ -219,6 +219,7 @@ void userMenu() {
             "我要挂号", 
             "挂号查询",
             "费用查询",
+            "智能药品推荐", 
             (patient_logged_in ? "我的账号": "登录" ),
             "返回登录界面"
         };
@@ -268,8 +269,19 @@ void userMenu() {
                 }
                 findCostByPatient(current_patient_id);
                 break;
-                
-            case 5:  // 登录/修改个人信息 
+            
+            case 5:  // 智能药品推荐 
+                if(!patient_logged_in) {
+                    showMessage("请先登录！", RED);
+                    if(!patientLogin(current_patient_id, current_patient_phone)) {
+                        break;
+                    }
+                    patient_logged_in = 1;
+                }
+                smartConsultation();
+                break;
+			    
+            case 6:  // 登录/修改个人信息 
                 if(patient_logged_in) {
                 	//菜单 
                     
@@ -282,7 +294,7 @@ void userMenu() {
                 }
                 break;
                 
-            case 6:  // 返回登录界面
+            case 7:  // 返回登录界面
                 currentUser = 0;
                 return;
                 

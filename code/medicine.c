@@ -577,3 +577,15 @@ Medicine* findMedicineById(const char *id) {
     return (Medicine*)hashMapGet(&medicine_hash, id);
 }
 
+// 按药品名查找
+Medicine* findMedicineByName(const char *name) {
+    Medicine *temp = medicine_list;
+    while(temp) {
+        if(strcmp(temp->name, name) == 0) {
+            return temp;
+        }
+        temp = temp->next;
+    }
+    return NULL;
+}
+
