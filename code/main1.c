@@ -7,6 +7,7 @@
 #include "registration.h"
 #include "cost.h"
 #include "hospitalization.h"
+#include "hashmap.h"
 
 Patient *patient_list = NULL;
 Doctor *doctor_list = NULL;
@@ -17,7 +18,47 @@ Hospitalization *hosp_list = NULL;
 int currentUser = 0;
 char universal_id[20] = {'\0'};
 
+// 添加哈希表
+HashMap patient_hash;
+HashMap doctor_hash;
+HashMap medicine_hash;
+HashMap cost_hash;
 
+// 重建所有哈希表（在数据加载后调用）
+void rebuildAllHashMaps() {
+    initHashMap(&patient_hash);
+    initHashMap(&doctor_hash);
+    initHashMap(&medicine_hash);
+    initHashMap(&cost_hash);
+    
+    // 重建患者哈希表
+    Patient *p = patient_list;
+    while (p) {
+        hashMapInsert(&patient_hash, p->id, p);
+        p = p->next;
+    }
+    
+    // 重建医生哈希表
+    Doctor *d = doctor_list;
+    while (d) {
+        hashMapInsert(&doctor_hash, d->id, d);
+        d = d->next;
+    }
+    
+    // 重建药品哈希表
+    Medicine *m = medicine_list;
+    while (m) {
+        hashMapInsert(&medicine_hash, m->id, m);
+        m = m->next;
+    }
+    
+    // 重建费用哈希表（按费用单号）
+    Cost *c = cost_list;
+    while (c) {
+        hashMapInsert(&cost_hash, c->cost_id, c);
+        c = c->next;
+    }
+}
 
 // 登录窗口
 void loginWindow() {
@@ -267,6 +308,12 @@ void mainMenu() {
 int main() {
     SetConsoleTitle("医院管理系统");
     
+    // 初始化哈希表
+    initHashMap(&patient_hash);
+    initHashMap(&doctor_hash);
+    initHashMap(&medicine_hash);
+    initHashMap(&cost_hash);
+    
     HANDLE a = GetStdHandle(STD_OUTPUT_HANDLE);
     
     // 隐藏光标
@@ -282,6 +329,9 @@ int main() {
 	loadRegistrations(); 
 	loadCosts();
 	loadHospitalizations();
+	
+	// 重建哈希表
+	rebuildAllHashMaps();
 	    
     // 显示欢迎信息
     showMessage("欢迎使用医院管理系统", CYAN);
@@ -299,6 +349,12 @@ int main() {
             mainMenu();
         }
     }
+    
+    // 清理哈希表
+    hashMapClear(&patient_hash);
+    hashMapClear(&doctor_hash);
+    hashMapClear(&medicine_hash);
+    hashMapClear(&cost_hash);
     
     // 显示光标
     //力竭了 

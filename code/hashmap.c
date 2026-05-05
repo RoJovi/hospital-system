@@ -13,7 +13,8 @@ unsigned int hash(const char *key) {
 
 // 初始化哈希表
 void initHashMap(HashMap *map) {
-    for (int i = 0; i < HASH_SIZE; i++) {
+	int i = 0;
+    for (i = 0; i < HASH_SIZE; i++) {
         map->buckets[i] = NULL;
     }
 }
@@ -78,7 +79,8 @@ void hashMapRemove(HashMap *map, const char *key) {
 
 // 清空哈希表（不释放data指向的数据）
 void hashMapClear(HashMap *map) {
-    for (int i = 0; i < HASH_SIZE; i++) {
+	int i = 0; 
+    for (i = 0; i < HASH_SIZE; i++) {
         HashEntry *curr = map->buckets[i];
         while (curr) {
             HashEntry *temp = curr;

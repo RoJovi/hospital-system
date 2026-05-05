@@ -2,7 +2,9 @@
 #include "ui.h"
 #include "data.h"
 #include "patient.h"
+#include "hashmap.h"
 
+extern HashMap cost_hash;
 extern Patient *patient_list;
 extern Doctor *doctor_list;
 extern Medicine *medicine_list;
@@ -14,14 +16,7 @@ extern char universal_id[20];
 
 // 查找费用记录
 Cost* findCostById(const char *cost_id) {
-    Cost *temp = cost_list;
-    while(temp) {
-        if(strcmp(temp->cost_id, cost_id) == 0) {
-            return temp;
-        }
-        temp = temp->next;
-    }
-    return NULL;
+    return (Cost*)hashMapGet(&cost_hash, cost_id);
 }
 
 // 查找患者的费用记录
@@ -159,6 +154,8 @@ void addCost() {
             newNode->next = cost_list;
             cost_list = newNode;
             
+            hashMapInsert(&cost_hash, newNode->cost_id, newNode);
+            
             updatePatientTotalCost(newCost.patient_id, newCost.amount);
             showMessage("费用记录添加成功！", GREEN);
             return;
@@ -226,6 +223,8 @@ void autoAddCost(const char *patient_id, const char *item_name, double amount) {
     memcpy(newNode, &newCost, sizeof(Cost));
     newNode->next = cost_list;
     cost_list = newNode;
+    
+    hashMapInsert(&cost_hash, newNode->cost_id, newNode);
     
     updatePatientTotalCost(patient_id, amount);
 }
@@ -570,6 +569,9 @@ void deleteCost() {
     // 删除头节点
     if(strcmp(cost_list->cost_id, cost_id) == 0) {
         p1 = cost_list;
+        
+        hashMapRemove(&cost_hash, p1->cost_id);
+        
         updatePatientTotalCost(p1->patient_id, -p1->amount);
         cost_list = cost_list->next;
         free(p1);
@@ -588,6 +590,9 @@ void deleteCost() {
         showMessage("未找到该费用记录！", RED);
         return;
     }
+    
+    hashMapRemove(&cost_hash, p1->cost_id);
+    
     updatePatientTotalCost(p1->patient_id, -p1->amount);
     p2->next = p1->next;
     free(p1);

@@ -2,7 +2,10 @@
 #include "doctor.h"
 #include "ui.h"
 #include "data.h"
+#include "hashmap.h"
 
+
+extern HashMap patient_hash;
 extern Patient *patient_list;
 extern Doctor *doctor_list;
 extern Medicine *medicine_list;
@@ -131,6 +134,9 @@ void addPatient() {
 	        newNode->next = patient_list;
 	        patient_list = newNode;
 	        
+	        // 添加到哈希表
+            hashMapInsert(&patient_hash, newNode->id, newNode);
+            
 	        showMessage("患者信息添加成功！", GREEN);
 	        return;
 		}
@@ -276,15 +282,9 @@ void showAllPatients() {
 
 // 用id查找患者
 Patient* findPatientById(const char *id) {
-    Patient *temp = patient_list;
-    while(temp) {
-        if(strcmp(temp->id, id) == 0) {
-            return temp;
-        }
-        temp = temp->next;
-    }
-    return NULL;
+    return (Patient*)hashMapGet(&patient_hash, id);
 }
+
 // 用电话号码查找患者
 Patient* findPatientByPhone(const char *phone) {
     Patient *temp = patient_list;
@@ -360,6 +360,9 @@ void delPatient(){
 	}
 	p1=patient_list;
 	if(strcmp(patient_list->id,id)==0){
+		// 从哈希表中移除
+        hashMapRemove(&patient_hash, patient_list->id);
+        
         patient_list=patient_list->next;
         free(p1);
         showMessage("已删除该患者信息", YELLOW);
@@ -370,6 +373,9 @@ void delPatient(){
         p1=p1->next;
     }
     if(strcmp(p1->id,id)==0){
+    	// 从哈希表中移除
+        hashMapRemove(&patient_hash, p1->id);
+        
         p2->next=p1->next;
         free(p1);
         showMessage("已删除该患者信息", YELLOW);

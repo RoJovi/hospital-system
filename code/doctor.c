@@ -1,7 +1,9 @@
 #include "doctor.h"
 #include "ui.h"
 #include "data.h"
+#include "hashmap.h"
 
+extern HashMap doctor_hash;
 extern Patient *patient_list;
 extern Doctor *doctor_list;
 extern Medicine *medicine_list;
@@ -113,7 +115,9 @@ void addDoctor() {
 	        newNode->next = doctor_list;
 	        doctor_list = newNode;
 	        
-	        
+	        // 添加到哈希表
+            hashMapInsert(&doctor_hash, newNode->id, newNode);
+            
 	        showMessage("医生信息添加成功！", GREEN);
 	        return;
 		}
@@ -343,6 +347,9 @@ void delDoctor(){
         p1=p1->next;
     }
     if(strcmp(p1->id,id)==0){
+    	 // 从哈希表移除
+        hashMapRemove(&doctor_hash, p1->id);
+        
         p2->next=p1->next;
         free(p1);
         showMessage("已删除该医生信息", YELLOW);
@@ -473,16 +480,10 @@ void modDoctor(){
     showMessage("暂无该医生信息", RED);
 	return;
 }
+
 // 查找医生
 Doctor* findDoctorById(const char *id) {
-    Doctor *temp = doctor_list;
-    while(temp) {
-        if(strcmp(temp->id, id) == 0) {
-            return temp;
-        }
-        temp = temp->next;
-    }
-    return NULL;
+    return (Doctor*)hashMapGet(&doctor_hash, id);
 }
 
 // 显示医生列表并让用户选择的函数

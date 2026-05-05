@@ -65,6 +65,7 @@ typedef struct Patient {
     struct Patient *next;
 } Patient;
 
+//医生结构体 
 typedef struct Doctor {
     char id[MAX_ID];
     char name[MAX_NAME];
@@ -77,6 +78,7 @@ typedef struct Doctor {
     struct Doctor *next;
 } Doctor;
 
+//药品结构体 
 typedef struct Medicine {
     char id[MAX_ID];
     char name[MAX_MEDICINE];
@@ -89,6 +91,7 @@ typedef struct Medicine {
     struct Medicine *next;
 } Medicine;
 
+//挂号单结构体 
 typedef struct Registration {
     char reg_id[MAX_ID];
     char patient_id[MAX_ID];
@@ -100,6 +103,7 @@ typedef struct Registration {
     struct Registration *next;
 } Registration;
 
+//费用单结构体 
 typedef struct Cost {
     char cost_id[MAX_ID];
     char patient_id[MAX_ID];
@@ -110,6 +114,7 @@ typedef struct Cost {
     struct Cost *next;
 } Cost;
 
+//住院结构体 
 typedef struct Hospitalization {
     char hosp_id[MAX_ID]; 
     char patient_id[MAX_ID];
@@ -122,4 +127,16 @@ typedef struct Hospitalization {
     struct Hospitalization *next;
 } Hospitalization;
 
+// 优先队列节点（用于挂号排队）
+typedef struct QueueNode {
+    Registration *reg;           // 挂号记录
+    int priority;                // 优先级（1=急诊，2=普通，3=老年人优先）
+    struct QueueNode *next;
+} QueueNode;
+
+// 优先队列
+typedef struct {
+    QueueNode *front;            // 队首（优先级最高）
+    int size;                    // 队列大小
+} PriorityQueue;
 #endif // UTILS_H
