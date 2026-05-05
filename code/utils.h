@@ -18,6 +18,9 @@
 #define CYAN FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY
 #define MAGENTA FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY
 
+// 哈希表大小
+#define HASH_SIZE 1000
+
 // 常量定义
 #define MAX_NAME 50
 #define MAX_ID 20
@@ -36,6 +39,19 @@ typedef struct {
     int day;
 } Date;
 
+// 哈希表项结构体
+typedef struct HashEntry {
+    char key[MAX_ID];
+    void *data;  // 指向实际数据
+    struct HashEntry *next;  // 拉链法解决冲突
+} HashEntry;
+
+// 哈希表结构体
+typedef struct {
+    HashEntry *buckets[HASH_SIZE];
+} HashMap;
+
+// 患者结构体
 typedef struct Patient {
     char id[MAX_ID];
     char name[MAX_NAME];
